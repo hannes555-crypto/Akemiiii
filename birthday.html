@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#100a18">
+<title>¡Felicidades, Akemi!</title><link rel="stylesheet" href="styles-v11.css"><script src="app-v11.js" defer></script><script src="celebration-v11.js" defer></script>
+</head>
+<body data-page="birthday">
+<main class="birthday" id="game">
+  <div class="streamers" id="streamers" aria-hidden="true"></div>
+  <button id="sound" class="sound" aria-pressed="false" aria-label="Activar música">♫ <span>SONIDO OFF</span></button>
+  <header class="birthday-heading"><h1>¡Felicidades,<br><em>Akemi!</em></h1><p>Gracias por hacer mis días más bonitos.<br>Hoy te toca sonreír a ti. ♡</p></header>
+  <div class="cake-space"><canvas id="world" width="400" height="270" aria-label="Pastel de cumpleaños de dos pisos con fresas y velitas encendidas"></canvas></div>
+  <section class="letter-invitation" aria-label="Una carta para Akemi"><p id="choicePrompt" aria-live="polite">Hay algo más para ti… ¿qué harás con esta carta?</p><button class="envelope" id="openLetter" aria-label="Abrir tu carta" aria-haspopup="dialog"><span class="envelope-back"></span><span class="paper-peek">Para Akemi ♡</span><span class="envelope-front"></span><span class="envelope-flap"></span><span class="seal">♥</span></button><div class="letter-choices" id="letterChoices"><button id="burnLetter" class="choice burn-choice">Quemarla <span aria-hidden="true">♨</span></button><button id="readLetter" class="choice read-choice">Abrirla <span aria-hidden="true">♡</span></button></div></section>
+  <a class="replay" href="index.html?v=20261007-11">↺ Volver a la primera luz</a>
+</main>
+<dialog id="burnDialog" class="burn-dialog" aria-label="La carta cae al fuego y el mundo se distorsiona"><canvas id="burnCanvas" aria-hidden="true"></canvas><p class="burn-caption" id="burnCaption" aria-live="polite">¿Por qué me odias? 😭😭😭</p><button id="skipBurn" class="skip-burn">Saltar animación</button></dialog>
+<dialog id="letterDialog" aria-labelledby="letterTitle"><article class="letter-paper"><button id="closeLetter" class="close-letter" aria-label="Cerrar carta">×</button><p class="letter-label">UNA CARTA PARA TI</p><h2 id="letterTitle">Akemi,</h2><div id="letterBody" class="letter-body"><p>Gracias por ser una amiga tan increíble. Me llevo con mucho cariño cada momento contigo: comer juntos, estudiar juntos, hacer los proyectos juntos y pasar tiempo en tu casa.</p><p>Me has ayudado más de lo que crees. No sé cómo explicarlo ni cómo decirlo, pero solo quería decirte, simplemente: gracias.</p><p>Si necesitas algo o quieres pedirme algo, no dudes en decírmelo. Estaré ahí para ti. A pesar de no ser muy bueno en muchas cosas, aunque sea solo para escucharte, estaré ahí para apoyarte.</p><p>¡Feliz cumpleaños, Akemi! Te quiero un montón.</p></div><div id="blankLetter" class="blank-letter" hidden aria-label="Carta pendiente de completar"><span></span><span></span><span></span><span></span></div><div class="letter-heart keepsake-heart"><svg viewBox="0 0 140 95" role="img" aria-label="Un corazón con cariño"><defs><linearGradient id="heartTint" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8d6d8"/><stop offset="1" stop-color="#d890a5"/></linearGradient></defs><path class="heart-orbit" d="M20 56C4 74 57 82 94 66S130 33 115 40"/><g class="heart-beat"><path class="heart-shape" d="M70 75C60 65 36 48 36 31C36 11 61 10 70 27C80 10 104 11 104 31C104 48 81 66 70 75Z"/><path class="heart-highlight" d="M46 31C45 23 53 19 59 23"/></g><path class="heart-spark" d="M113 16v10m-5-5h10M24 35v6m-3-3h6"/></svg></div></article></dialog>
+</body></html>
