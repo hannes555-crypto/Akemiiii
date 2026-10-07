@@ -109,12 +109,49 @@ if(!isBirthday){
     $('blankLetter').hidden=true;
   }
   restoreLetter();
+  // Animación de la carta: el papel sube y el texto se escribe palabra por palabra.
+  // Tocar el papel la salta. No cambia el formato: solo cuándo aparece cada palabra.
+  const paper=dialog.querySelector('.letter-paper');
+  const fx=document.createElement('style');
+  fx.textContent=`
+.letter-paper.writing{animation:paper-rise .8s cubic-bezier(.2,.8,.25,1) both}
+.letter-paper .w{display:inline-block;opacity:0;transform:translateY(7px);filter:blur(3px);animation:word-in .55s ease forwards;animation-delay:var(--d,0s)}
+.letter-paper.writing .keepsake-heart{animation:heart-pop 1s cubic-bezier(.3,1.6,.5,1) var(--hd,3s) both}
+.letter-paper.skipped .w{animation:none;opacity:1;transform:none;filter:none}
+.letter-paper.skipped .keepsake-heart{animation:none}
+@keyframes paper-rise{from{opacity:0;transform:translateY(46px) scale(.95) rotate(-.8deg)}to{opacity:1;transform:none}}
+@keyframes word-in{to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes heart-pop{from{opacity:0;transform:scale(.2) rotate(-12deg)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.letter-paper.writing,.letter-paper.writing .keepsake-heart{animation:none}.letter-paper .w{animation:none;opacity:1;transform:none;filter:none}}`;
+  document.head.append(fx);
+  function wordify(el,clock,step){
+    const text=el.textContent;el.textContent='';
+    text.split(/(\s+)/).forEach(tok=>{
+      if(!tok)return;
+      if(/^\s+$/.test(tok)){el.append(tok);return;}
+      const w=document.createElement('span');w.className='w';w.textContent=tok;
+      w.style.setProperty('--d',clock.t.toFixed(2)+'s');el.append(w);
+      clock.t+=step+(/[.!?…]$/.test(tok)?.18:/[,:;]$/.test(tok)?.08:0);
+    });
+    clock.t+=.2;
+  }
+  function playLetter(){
+    if(reduceMotion)return;
+    paper.classList.remove('writing','skipped');
+    const blocks=[dialog.querySelector('.letter-label'),$('letterTitle'),...$('letterBody').querySelectorAll('p')];
+    const words=blocks.reduce((n,b)=>n+b.textContent.trim().split(/\s+/).length,0);
+    const clock={t:.55},step=Math.min(.05,4.6/words);
+    blocks.forEach(b=>wordify(b,clock,step));
+    paper.style.setProperty('--hd',(clock.t+.1).toFixed(2)+'s');
+    void paper.offsetWidth;paper.classList.add('writing');
+  }
+  paper.addEventListener('click',()=>paper.classList.add('skipped'));
   function openEnvelope(){
     if(envelope.disabled)return;
     restoreLetter();
     envelope.disabled=true;envelope.classList.add('opening');
     if(musicOn)playNotes([76,79,84],.14);
-    setTimeout(()=>{dialog.showModal();dialog.scrollTop=0;$('closeLetter').focus({preventScroll:true});},reduceMotion?0:650);
+    setTimeout(()=>{dialog.showModal();dialog.scrollTop=0;$('closeLetter').focus({preventScroll:true});playLetter();},reduceMotion?0:650);
   }
   envelope.addEventListener('click',openEnvelope);
   $('readLetter').addEventListener('click',openEnvelope);
